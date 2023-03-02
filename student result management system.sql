@@ -29,13 +29,19 @@ DROP TABLE IF EXISTS STUDENT_DETAILS;
 
 CREATE TABLE STUDENT_DETAILS(
     `student_details_id` varchar(100) NOT NULL,
-    `students_id` varchar(100)  NOT NULL,   
+    `students_id` varchar(100)  NOT NULL,   -- fpk student
     `phone_number` varchar(50)  NOT NULL,
     `guardian_name` varchar(20)  NOT NULL,
     `physical_address` varchar(20)  NULL,
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
-    PRIMARY KEY (`student_details_id`)
+    PRIMARY KEY (`student_details_id`),
+
+    KEY `student_details_id` (`student_details_id`),
+    CONSTRAINT `fpk_student_details_id` FOREIGN KEY (`student_details_id`) 
+    REFERENCES `STUDENTS` (`students_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS STREAM;
@@ -64,7 +70,13 @@ CREATE TABLE CLASS(
     `stream_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,  -- FPK, STREAM ----------------------
     `isActive` int DEFAULT 1 NOT NULL,
      PRIMARY KEY (`class_id`),
-     UNIQUE KEY `name` (`class_name`)
+     UNIQUE KEY `name` (`class_name`),
+
+    KEY `fpk_stream_id` (`stream_id`),
+    CONSTRAINT `fpk_stream_id_class` FOREIGN KEY (`stream_id`) 
+    REFERENCES `STREAM` (`stream_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS TEACHERS;
@@ -91,12 +103,23 @@ DROP TABLE IF EXISTS CLASS_DETAILS;
 -- IS SET TO NULL. 
 CREATE TABLE CLASS_DETAILS(
     `class_details_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `class_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, 
-    `class_teacher_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL, 
+    `class_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,  -- fpk class. 
+    `class_teacher_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,  -- fpk class_teacher_id
     `max_no_of_student` int NULL,
     `max_no_of_exams` int NULL,
     PRIMARY KEY (`class_details_id`),
-    UNIQUE KEY `one_clsstch_on_clss` (`class_id`, `class_teacher_id`)
+    UNIQUE KEY `one_clsstch_on_clss` (`class_id`, `class_teacher_id`),
+
+
+    KEY `fpk_class_id` (`class_id`),
+    CONSTRAINT `fpk_class_id` FOREIGN KEY (`class_id`) 
+    REFERENCES `CLASS` (`class_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE,
+
+    KEY `fpk_sclass_teacher_id` (`class_teacher_id`),
+    CONSTRAINT `fpk_class_teacher_id` FOREIGN KEY (`class_teacher_id`) 
+    REFERENCES `TEACHERS` (`teacher_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DROP TABLE IF EXISTS ACADEMIC_YEAR;
@@ -116,6 +139,36 @@ CREATE TABLE ACADEMIC_YEAR(
     UNIQUE KEY `name` (`academic_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- ACADEMIC YEAR CLASSES ------------------------------------------
+-- EACH CLASS HAS TO BE POSTED TO AN YEAR. 
+DROP TABLE IF EXISTS ACADEMIC_YEAR_CLASSES;
+
+CREATE TABLE ACADEMIC_YEAR_CLASSES(
+    `academic_year_classes_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `academic_year_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, -- fpk academic year,
+    `class_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, -- fpk class
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
+    `isActive` int DEFAULT 1 NOT NULL,
+    PRIMARY KEY (`academic_year_classes_id`),
+    UNIQUE KEY `one_clss_one_year` (`academic_year_id`,`class_id`),
+
+
+    KEY `fpk_academic_year_id` (`academic_year_id`),
+    CONSTRAINT `fpk_academic_year_id` FOREIGN KEY (`academic_year_id`) 
+    REFERENCES `ACADEMIC_YEAR` (`academic_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE, 
+
+    KEY `class_id` (`class_id`),
+    CONSTRAINT `fpk_class_table_id` FOREIGN KEY (`class_id`) 
+    REFERENCES `CLASS` (`class_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
 DROP TABLE IF EXISTS ACADEMIC_YEAR_CLASS_STUDENTS;
 
 -- ------------- CREATE ACADEMIC YEAR CLASSES STUDENTS TABLE -------------------------------------------------------------------------
@@ -127,15 +180,25 @@ DROP TABLE IF EXISTS ACADEMIC_YEAR_CLASS_STUDENTS;
 -- isActive MEANS THAT THE STUDENT IS NOT IN CLASS FOR A LONG PERIOD OF TIME WITHOUT A REASON. 
 CREATE TABLE ACADEMIC_YEAR_CLASS_STUDENTS(
     `academic_year_class_students_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `academic_year_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, -- FPK. ACADEMIC_YEAR ---
+    `academic_year_classes_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, -- FPK. ACADEMIC_YEAR_CLASSES ---
     `students_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, -- FPK, STUDENTS --------
-    `class_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,  -- FPK, CLASS--------------------
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
     `isActive` int DEFAULT 1 NOT NULL,
     `hasCompleted` int DEFAULT 0 NOT NULL,
     PRIMARY KEY (`academic_year_class_students_id`),
-    UNIQUE KEY `fpk_academic_year_class_id_students_id` (`academic_year_id`,`students_id`)
+    UNIQUE KEY `fpk_academic_year_class_id_students_id` (`academic_year_classes_id`,`students_id`),
+
+    KEY `academic_year_classes_id` (`academic_year_classes_id`),
+    CONSTRAINT `fpk_academic_year_class_id` FOREIGN KEY (`academic_year_classes_id`) 
+    REFERENCES `ACADEMIC_YEAR_CLASSES` (`academic_year_classes_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE, 
+
+    KEY `students_id` (`students_id`),
+    CONSTRAINT `fpk_students_id` FOREIGN KEY (`students_id`) 
+    REFERENCES `STUDENTS` (`students_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
@@ -170,9 +233,16 @@ CREATE TABLE ACADEMIC_TERMS(
     `isActive` int DEFAULT 1 NOT NULL,
     PRIMARY KEY (`academic_terms_id`),
     UNIQUE KEY `uniq_terms_academic` (`academic_year_id`, `term_id`),
+
     KEY `academic_year_id` (`academic_year_id`),
-    CONSTRAINT `fpk_academic_year_id` FOREIGN KEY (`academic_year_id`) REFERENCES `ACADEMIC_YEAR` (`academic_id`) 
+    CONSTRAINT `fpk_academic_year_table_id` FOREIGN KEY (`academic_year_id`) REFERENCES `ACADEMIC_YEAR` (`academic_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE, 
+
+    KEY `term_id` (`term_id`),
+    CONSTRAINT `fpk_academic_terms` FOREIGN KEY (`term_id`) REFERENCES `TERMS` (`term_id`) 
     ON DELETE CASCADE ON UPDATE CASCADE
+
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci; 
 
 DROP TABLE IF EXISTS EXAM;
