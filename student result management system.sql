@@ -1,3 +1,7 @@
+USE ssrms2;
+
+DROP TABLE IF EXISTS STUDENTS;
+
 -- CREATE TABLE FOR STUDENTS. 
 -- STUDENTS ARE REGISTERED USING THEIR NAMES, ROLLID, GENDER. 
 -- ACTIVE STUDENTS MEANS THAT THEY ARE IN CLASS. INACTIVE MEANS DISCONTINUED. 
@@ -16,38 +20,40 @@ CREATE TABLE STUDENTS(
   UNIQUE KEY `name` (`roll_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+DROP TABLE IF EXISTS STUDENT_DETAILS;
 
---------- CREATE TABLE FOR STUDENT DETAILS. 
+-- ------- CREATE TABLE FOR STUDENT DETAILS. 
 -- STUDENTS DETIALS ARE SOME OF THE DETAILS ABOUT A STUDENT THAT WERE NOT CAPTURED DURING 
 -- STUDENT REGISTRATION. THIS DETAILS ARE SAVED AFTER STUDENT HAS BEEN ADMITTED WITH AN ADMISSION NUMBER. 
 -- PRIMARY KEY IS student_details_id; 
 
 CREATE TABLE STUDENT_DETAILS(
-    `student_details_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `students_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,   --- FPK, STUDENTS---------
-    `phone_number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `guardian_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `physical_address` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+    `student_details_id` varchar(100) NOT NULL,
+    `students_id` varchar(100)  NOT NULL,   
+    `phone_number` varchar(50)  NOT NULL,
+    `guardian_name` varchar(20)  NOT NULL,
+    `physical_address` varchar(20)  NULL,
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
-    PRIMARY KEY (`student_details_id)
+    PRIMARY KEY (`student_details_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
-------------------------- CREATE TABLE FOR STREAM ------------------------------------------------------------------------------
+DROP TABLE IF EXISTS STREAM;
+-- ----------------------- CREATE TABLE FOR STREAM ------------------------------------------------------------------------------
 -- STREAM HOUSES ALL THE CLASSES IN THE SCHOOL. STREAM HAS MANY CLASSES. 
 -- IF A STREAM IS INACTIVE, CLASSES CANNOT BE SAVED ON AN INACTIVE STREAM. 
 CREATE TABLE STREAM(
-    `stream_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `stream_name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `stream_id` varchar(100) NOT NULL,
+    `stream_name` varchar(10) NOT NULL,
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
     `isActice` int DEFAULT 1 NOT NULL,
-    PRIMARY KEY (`stream_id),
+    PRIMARY KEY (`stream_id`),
     UNIQUE KEY `name` (`stream_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
------------------------------- CREATE TABLE FOR CLASS --------------------------------------------------------------------------
+DROP TABLE IF EXISTS CLASS;
+-- ---------------------------- CREATE TABLE FOR CLASS --------------------------------------------------------------------------
 -- A CLASS BELONGS TO A STREAM.
 -- WHEN A CLASS IS INACTIVE, STUDENTS CANNOT CHOOSE THIS CLASS DURING ADMISSION. 
 CREATE TABLE CLASS(
@@ -55,13 +61,15 @@ CREATE TABLE CLASS(
     `class_name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
-    `stream_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,  ----FPK, STREAM ----------------------
+    `stream_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,  -- FPK, STREAM ----------------------
     `isActive` int DEFAULT 1 NOT NULL,
      PRIMARY KEY (`class_id`),
      UNIQUE KEY `name` (`class_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
----------------------------- CREATE TEACHER TABLE -----------------------------------------------
+DROP TABLE IF EXISTS TEACHERS;
+
+-- -------------------------- CREATE TEACHER TABLE -----------------------------------------------
 -- ACTIVE TEACHERS MEANS THAT THEY ARE IN SCHOOL. 
 CREATE TABLE TEACHERS(
     `teacher_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -72,9 +80,12 @@ CREATE TABLE TEACHERS(
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
     `isActive` int DEFAULT 1 NOT NULL,
-    PRIMARY KEY (`teacher_id),
+    PRIMARY KEY (`teacher_id`),
     UNIQUE KEY `uniq_id_no` (`id_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+DROP TABLE IF EXISTS CLASS_DETAILS;
 
 -- WHEN THE TEACHER IS NO LONGER IN SCHOOL AND THEY WERE CLASS TEACHER, THE CLASS TEACHER FIELD 
 -- IS SET TO NULL. 
@@ -88,8 +99,9 @@ CREATE TABLE CLASS_DETAILS(
     UNIQUE KEY `one_clsstch_on_clss` (`class_id`, `class_teacher_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+DROP TABLE IF EXISTS ACADEMIC_YEAR;
 
------------------------ CREATE TABLE ACADEMIC YEAR -------------------------------------------------------------------------------
+-- --------------------- CREATE TABLE ACADEMIC YEAR -------------------------------------------------------------------------------
 -- AN ACADEMIC YEAR HAS MANY TERMS
 -- STUDENTS SHIFT TO NEW CLASSES EVERY YEAR. 
 -- ACADEMIC YEAR ARE CLOSED, WHEN CLOSED USERS CANNOT POST TO ACADEMIC YEAR. 
@@ -104,7 +116,9 @@ CREATE TABLE ACADEMIC_YEAR(
     UNIQUE KEY `name` (`academic_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
----------------- CREATE ACADEMIC YEAR CLASSES STUDENTS TABLE -------------------------------------------------------------------------
+DROP TABLE IF EXISTS ACADEMIC_YEAR_CLASS_STUDENTS;
+
+-- ------------- CREATE ACADEMIC YEAR CLASSES STUDENTS TABLE -------------------------------------------------------------------------
 -- STUDENTS BELONG TO DIFFERENT CLASSES EVERY ACADEMIC YEAR. 
 -- IN THIS TABLE THE STUDENT IS BEING PLACED IN A CLASS FOR A SPECIFIC YEAR. 
 -- IF THE ACADEMIC YEAR IS CLOSED, AND THEIR IS NO ACTIVE ACADEMIC YEAR, THE STUDENT CANNOT BE POSTED.
@@ -113,19 +127,20 @@ CREATE TABLE ACADEMIC_YEAR(
 -- isActive MEANS THAT THE STUDENT IS NOT IN CLASS FOR A LONG PERIOD OF TIME WITHOUT A REASON. 
 CREATE TABLE ACADEMIC_YEAR_CLASS_STUDENTS(
     `academic_year_class_students_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `academic_year_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, --- FPK. ACADEMIC_YEAR ---
-    `students_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, --- FPK, STUDENTS --------
-    `class_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,  --- FPK, CLASS--------------------
+    `academic_year_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, -- FPK. ACADEMIC_YEAR ---
+    `students_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, -- FPK, STUDENTS --------
+    `class_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,  -- FPK, CLASS--------------------
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
     `isActive` int DEFAULT 1 NOT NULL,
     `hasCompleted` int DEFAULT 0 NOT NULL,
     PRIMARY KEY (`academic_year_class_students_id`),
-    UNIQUE KEY `fpk_academic_year_class_id_students_id` (`academic_year_class_id`,`students_id`)
+    UNIQUE KEY `fpk_academic_year_class_id_students_id` (`academic_year_id`,`students_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
----------------------------- CREATE TERMS -------------------------------------------------------------------
+DROP TABLE IF EXISTS TERMS;
+-- -------------------------- CREATE TERMS -------------------------------------------------------------------
 -- TERMS CAN BE ADDED INDEPENDENTLY TO THE SCHOOL. AND LATER BY POSTED TO ACADEMIC YEAR. 
 CREATE TABLE TERMS(
     `term_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -137,30 +152,43 @@ CREATE TABLE TERMS(
     UNIQUE KEY `uniq_term_name` (`term_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--------------------- CREATE ACADEMIC_TERMS ------------------------------------------------------------------
+DROP TABLE IF EXISTS ACADEMIC_TERMS;
+
+-- ------------------ CREATE ACADEMIC_TERMS ------------------------------------------------------------------
 -- AN ACADEMIC YEAR HAS MANY TERMS. THE USERS CHOOSES THE TERM TO ADD TO AN ACADEMIC YEAR
 -- A TERM CAN BE EITHER ACTIVE OR INACTIVE. WHEN INACTIVE THE USER CANNOT PERFORM 
 -- POSITNG. 
+-- WARN THE USER WHEN TRYING TO DELETE YEAR IF THE YEAR HAS ACADEMIC TERMS USE INACTIVE OR ACTIVE
+-- INSTEAD. 
 
 CREATE TABLE ACADEMIC_TERMS(
     `academic_terms_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-    `academic_year_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, --- FPK, ACADEMIC YEAR -----
-    `term_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,  --- FPK, TERMS --------
+    `academic_year_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL, -- FPK, ACADEMIC YEAR -----
+    `term_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,  -- FPK, TERMS --------
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
     `isActive` int DEFAULT 1 NOT NULL,
     PRIMARY KEY (`academic_terms_id`),
-    UNIQUE KEY `uniq_terms_academic` (`academic_year_id`, `term_id`)
+    UNIQUE KEY `uniq_terms_academic` (`academic_year_id`, `term_id`),
+    KEY `academic_year_id` (`academic_year_id`),
+    CONSTRAINT `fpk_academic_year_id` FOREIGN KEY (`academic_year_id`) REFERENCES `ACADEMIC_YEAR` (`academic_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci; 
+
+DROP TABLE IF EXISTS EXAM;
+-- ------------------------------- CREATE EXAM TABLE ------------------------------------
+
+CREATE TABLE EXAM(
+  `exam_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `exam_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
+  `exam_out_of` int NOT NULL,
+  `isActive` int DEFAULT 1 NOT NULL,
+  PRIMARY KEY (`exam_id`),
+  UNIQUE KEY `exam_name` (`exam_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
-
-CREATE TABLE DEFAULT_SETTINGS(
-    `assign_rollid_dynamically` int DEFAULT 1 NOT NULL,
-)   
-
-
-
-
-
-
+-- AN SCHOOL HAS ACADEMIC YEARS, ACADEMIC YEARS HAVE TERM, 
+-- STUDENTS ARE PLACED IN DIFFERENT CLASSES EACH YEAR. 
+-- EACH TERM A CLASS UNDERTAKES EXAMS.
