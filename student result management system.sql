@@ -223,6 +223,7 @@ DROP TABLE IF EXISTS ACADEMIC_TERMS;
 -- POSITNG. 
 -- WARN THE USER WHEN TRYING TO DELETE YEAR IF THE YEAR HAS ACADEMIC TERMS USE INACTIVE OR ACTIVE
 -- INSTEAD. 
+-- TABLE REPRESENTS ALL THE TERMS IN AN ACADEMIC YEAR. 
 
 CREATE TABLE ACADEMIC_TERMS(
     `academic_terms_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -261,4 +262,93 @@ CREATE TABLE EXAM(
 
 -- AN SCHOOL HAS ACADEMIC YEARS, ACADEMIC YEARS HAVE TERM, 
 -- STUDENTS ARE PLACED IN DIFFERENT CLASSES EACH YEAR. 
--- EACH TERM A CLASS UNDERTAKES EXAMS.
+-- EACH TERM IN AN ACADEMIC YEAR HAS A CLASS UNDERTAKING EXAMS.
+
+CREATE TABLE TERM_EXAMS(
+    `term_exam_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `term_table_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `class_table_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
+    `isActive` int DEFAULT 1 NOT NULL,
+
+    PRIMARY KEY (`term_exam_id`),
+    UNIQUE KEY `uniq_term_table_id_class_table_id` (`term_table_id`, `class_table_id`),
+
+    KEY `term_table_id` (`term_table_id`),
+    CONSTRAINT `fpk_term_table_id` FOREIGN KEY (`term_table_id`) 
+    REFERENCES `ACADEMIC_TERMS` (`academic_terms_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE,
+
+    KEY `class_table_id` (`class_table_id`),
+    CONSTRAINT `fpk_term_exam_class_table_id` FOREIGN KEY (`class_table_id`) 
+    REFERENCES `ACADEMIC_YEAR_CLASSES` (`academic_year_classes_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- CREATE TABLE SUBJECTS -----------------------------------------------------------------------
+CREATE TABLE SUBJECTS(
+    `subject_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `subject_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `subject_code` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
+
+    PRIMARY KEY (`subject_id`),
+    UNIQUE KEY `subject_name` (`subject_name`),
+    UNIQUE KEY `subject_code` (`subject_code`)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- A SUBJECT IS TAUGHT BY A TEACHER FOR A CLASS. BUT THE TEACHER MUST BE ACTIVE AND THE CLASS
+-- SHOULD BE ACTIVE IN A YEAR. 
+-- THIS TABLE HOLDS THE TAUGHT SUBJECTS IN THE SCHOOL. 
+
+CREATE TABLE CLASS_SUBJECT_TEACHERS(
+    `class_subject_teachers` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    -- techers table id. 
+    `teachers_table_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    -- subject table id.
+    `subject_table_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    -- academic class table id.
+    `academic_class_table_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
+    `isActive` int DEFAULT 1 NOT NULL,
+
+    KEY `teachers_table_id` (`teachers_table_id`),
+    CONSTRAINT `fpk_teachers_table_id` FOREIGN KEY (`teachers_table_id`) 
+    REFERENCES `TEACHERS` (`teacher_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE,
+
+    KEY `subject_table_id` (`subject_table_id`),
+    CONSTRAINT `fpk_subject_table_id` FOREIGN KEY (`subject_table_id`) 
+    REFERENCES `SUBJECTS` (`subject_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE,
+
+    KEY `academic_class_table_id` (`academic_class_table_id`),
+    CONSTRAINT `fpk_academic_class_table_id` FOREIGN KEY (`academic_class_table_id`) 
+    REFERENCES `ACADEMIC_YEAR_CLASSES` (`academic_year_classes_id`) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- A RESULT IS FOR A STUDENT, BUT THE STUDENT SHOULD BE IN A CLASS. 
+-- THIS MEANS THAT THE STUDENT SHOULD BE IN AN ACTIVE ACADEMIC YEAR. 
+-- A RESULT BELONGS TO AN EXAM. 
+-- RESULT BELONG TO A SUBJECT BUT THE SUBJECT MUST BE A TAUGHT SUBJECT IN THE CLASS. 
+
+-- CREATE TABLE RESULTS(
+--     `results_table_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+--     `academic_year_class_students_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+--     `term_exam_table_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+--     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL,
+    
+--     PRIMARY KEY (`results_table_id`),
+--     UNIQUE KEY `unq_result_id`
+
+-- )
