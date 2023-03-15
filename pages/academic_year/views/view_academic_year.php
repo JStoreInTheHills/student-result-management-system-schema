@@ -47,6 +47,7 @@
                         </form>
 
                         <div class="btn-group">
+                            <button class="btn btn-sm btn-primary" id="add-class-to-academic-year">Add Class to Academic Year</button>
                             <button id="edit_academic_year" class="btn btn-sm btn-outline-danger"></button>
                         </div>
                     </div>
@@ -107,49 +108,97 @@
 
                     <nav class="mb-4">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
-                                role="tab" aria-controls="nav-home" aria-selected="true"> <span><i
-                                        class="fas fa-chalkboard "></i></span> Academic Year Terms</a>
-                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-                                role="tab" aria-controls="nav-profile" aria-selected="false"> <span><i
-                                        class="fas fa-book-reader"></i></span> End Year Performance</a>
+                            <a class="nav-item nav-link active" id="nav-academic-term-tab" data-toggle="tab" href="#nav-academic-term"
+                                role="tab" aria-controls="nav-academic-term" aria-selected="true"> <span><i
+                                        class="fas fa-chalkboard "></i></span> Terms in the Academic Year</a>
+                            <a class="nav-item nav-link" id="nav-academic-year-performance-tab" data-toggle="tab" href="#nav-academic-year-performance"
+                                role="tab" aria-controls="nav-academic-year-performance" aria-selected="false"> <span><i
+                                        class="fas fa-book-reader"></i></span> Classes in the Academic Year</a>
                         </div>
                     </nav>
 
                     <!-- start of row -->
-                    <div class="row">
-                        <div class="col-lg-8">
+                    
+                        
                             <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                                    aria-labelledby="nav-home-tab">
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header text-primary font-weight-bold">
-                                            Academic Year Terms
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped" width="100%" cellspacing="0"
-                                                    id="term_year_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Date Added</th>
-                                                            <th>Term Name</th>
-                                                            <th>Created By</th>
-                                                            <th>Status</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                </table>
+                                <div class="tab-pane fade show active" id="nav-academic-term" role="tabpanel"
+                                    aria-labelledby="nav-academic-term-tab">
+
+                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                        <strong>All the Academic Terms for this year, are shown on the table below. </strong>
+                                        <hr>
+                                        <p class="mb-0">To add an academic term to the Academic Year. Choose the term from 
+                                        the option list on the right and click on Save. </p>
+                                        <hr>
+                                        <p><strong> Note! Terms that are inActive will not appear on this option list.</strong></p>
+                                    </div>
+
+                                    <div class="row">
+                                    
+                                        <div class="col-lg-8">
+                                            <div class="card shadow mb-4">
+                                                <div class="card-header text-primary font-weight-bold">
+                                                    Academic Year Terms
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped" width="100%" cellspacing="0"
+                                                            id="term_year_table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Date Added</th>
+                                                                    <th>Term Name</th>
+                                                                    <th>Status</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="card mb-4">
+                                                <div class="card-header text-primary font-weight-bold">
+                                                    Add Terms to Academic Year
+                                                </div>
+                                                <div class="card-body">
+                                                    <span id="card_alert"></span>
+                                                    <form id="year_form" class="user">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-12 mb-3 mb-sm-0">
+                                                                <label class="text-primary" for="term_name">Choose Term Name:</label>
+                                                                <select class="form-control" name="term_name" id="term_name">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="btn-group float-right">
+                                                            <button class="btn btn-primary" name="submit" type="submit"
+                                                                id="form_submit">Save</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                     </div>
+
                                 </div>
 
-                                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
-                                    aria-labelledby="nav-profile-tab">
+                                <div class="tab-pane fade" id="nav-academic-year-performance" role="tabpanel"
+                                    aria-labelledby="nav-academic-year-performance-tab">
+
+                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                        <strong>All the Classes for this year, are shown on the table below. </strong>
+                                        <hr>
+                                        <p class="mb-0">To add a class to this academic year. Click the Add class to Academic Year
+                                        and add the class. Lastly click on the save button.</p>
+                                    </div>
+
                                     <div class="card shadow mb-4">
-                                        <div class="card-header text-primary">
-                                            End Year Stream Performance
+                                        <div class="card-header text-primary font-weight-bold">
+                                            End Year Class Performance
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -157,11 +206,12 @@
                                                     id="class_end_year_table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Date Created</th>
-                                                            <th>Stream Name</th>
-                                                            <th>Stream Code</th>
+                                                            <th>Date Class Added to the Year</th>
+                                                            <th>Class Name</th>
+                                                            <th>Class Code</th>
                                                             <th>Class Teacher</th>
-                                                            <th>Class</th>
+                                                            <th>Stream Name</th>
+                                                            <th>Class Status</th>
                                                         </tr>
                                                     </thead>
                                                 </table>
@@ -172,56 +222,11 @@
                                 </div>
                             </div>
 
-                        </div>
-                        <!------------------------------------------------------------------------------------------------->
-                        <div class="col-lg-4">
-                            <div class="card shadow mb-4">
-                                <div class="card-header text-primary font-weight-bold">
-                                    Add Terms to Academic Year
-                                </div>
-                                <div class="card-body">
-                                    <span id="card_alert"></span>
-                                    <form id="year_form" class="user">
-                                        <div class="form-group row">
-                                            <div class="col-md-12 mb-3 mb-sm-0">
-                                                <label class="text-primary" for="term_name">Choose Term Name:</label>
-                                                <select class="form-control" name="term_name" id="term_name">
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="btn-group float-right">
-                                            <button class="btn btn-primary" name="submit" type="submit"
-                                                id="form_submit">Save</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                      
+                            <!------------------------------------------------------------------------------------------------->
+                            
 
-                        <!-- <div class="col-lg-12">
-                            <div class="card shadow mb-4">
-                                <div class="card-header text-primary font-weight-bold">
-                                    Academic Year Classes
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped" width="100%" cellspacing="0"
-                                            id="term_year_table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date Added</th>
-                                                    <th>Term Name</th>
-                                                    <th>Created By</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                    </div>
+                   
                     <!-- endo of row -->
 
 

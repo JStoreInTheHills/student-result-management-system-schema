@@ -157,7 +157,7 @@ function customJs() {
   //   .src("./src/js/school.js")
   //   .pipe(gulp.dest("./dist/js/utils"));
 
-  // var terms = gulp.src("./src/js/terms/*").pipe(gulp.dest("./dist/js/terms"));
+  var terms = gulp.src("./src/js/terms/*").pipe(gulp.dest("./dist/js/terms"));
 
   // var classes = gulp
   //   .src("./src/js/class/*")
@@ -210,7 +210,7 @@ function customJs() {
     // dashboard,
     // admin,
     utils,
-    // terms,
+    terms,
     webfonts
     // settings,
     // school,

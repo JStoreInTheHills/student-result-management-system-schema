@@ -1,9 +1,10 @@
 <?php
 
-// include "/resources/fxn/redirect.php";
+// session_start();
 
 // if(!isset($_SESSION['alogin']) || (time() - $_SESSION['last_login_timestamp']) > 1500 || !isset($_SESSION['role_id'])){
-//   redirectToHomePage();
+//     header("Location: /login");
+//     exit;
 //   }else{
 //       $_SESSION['last_login_timestamp'] = time();
   ?>
@@ -19,35 +20,27 @@
     <div id="wrapper">
 
         <?php include "../../resources/views/sidebar.html"; ?>
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
 
+                
                 <?php include '../../resources/views/topbar.php' ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between">
-                    <a class="btn btn-md text-primary mb-2" onclick="goBack()"> <i class="fas fa-arrow-left"></i> Back
-                        to previous page</a>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Manage Academic Terms</h1>
                     </div>
-                    
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-3">
-                        <h1 class="h3 mb-0 text-gray-800" id="year_heading"></h1>
-                    </div>
-
-                    <div id="alert"></div>
 
                     <nav aria-label="breadcrumb mb-3">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/index">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Academic Years</li>
+                            <li class="breadcrumb-item active" aria-current="page">Academic Terms</li>
                         </ol>
                     </nav>
 
@@ -56,18 +49,16 @@
                         <div class="col-lg-8">
                             <div class="card shadow mb-4">
                                 <div class="card-header">
-                                    <span class="text-primary font-weight-bold"> <i class="fas fa-address-book"></i> All
-                                        Academic Years (Academic Periods).</span>
+                                   <span class="text-primary"> All Academic Terms</span>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-striped" width="100%" cellspacing="0" id="year_table">
+                                        <table class="table table-striped" width="100%" cellspacing="0" id="terms_table">
                                             <thead>
                                                 <tr>
-
+                                                    <th>Academic Term Name</th>
                                                     <th>Created At</th>
-                                                    <th>Year Name</th>
-                                                    <th>Year Status</th>                                                  
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -80,21 +71,23 @@
                         <div class="col-lg-4">
                             <div class="card mb-4">
                                 <div class="card-header">
-                                    <span class="text-primary font-weight-bold">Add an Academic Period (Academic Year).</span>
+                                   <span class="text-primary" >Add Academic Terms</span> 
                                 </div>
                                 <div class="card-body">
 
-                                    <div class="errors text-danger"><span></span></div>
+                                <div class="errors text-danger"><span></span></div>
 
-                                    <form id="year_form" class="user">
+                                    <form id="term_form">
+
                                         <div class="form-group row">
                                             <div class="col-md-12 mb-3 mb-sm-0">
-                                                <label for="year_name" class="text-primary">Enter an Academic
-                                                    Year</label>
-                                                <input type="text" name="year_name" autocomplete="off"
-                                                    class="form-control" id="year_name" placeholder="e.g 2020-2021">
+                                            <label for="term_name" class="text-primary">Enter Name of Term</label>
+                                               <input type="text" autocomplete="off" class="form-control" 
+                                                    id="term_name" name="term_name" placeholder="e.g First Term, Second Term">
+                                                    <small id="emailHelp" class="form-text text-muted">Term name should be 4 charaters and above.</small>
                                             </div>
                                         </div>
+
                                         <div class="btn-group float-right">
                                             <button class="btn btn-primary" type="submit">Save</button>
                                         </div>
@@ -107,10 +100,11 @@
 
                 </div>
                 <!-- /.container-fluid -->
+
                
             </div>
             <!-- End of Main Content -->
-            <?php include '../../resources/views/footer.html' ?>
+            <?php include '../layouts/footer.php' ?>
         </div>
         <!-- End of Content Wrapper -->
         <?php #include '../layouts/utils/logout_modal.html' ?>
@@ -120,7 +114,7 @@
 
     <script src="/dist/js/main.min.js"></script>
     <script src="/dist/js/utils/utils.js"></script>
-    <script src="/dist/js/years/years.js"></script>
+    <script src="/dist/js/terms/terms.js"></script>
 </body>
 
 </html>

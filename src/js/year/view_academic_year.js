@@ -1,4 +1,3 @@
-// $(document).ready(() => {
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
@@ -6,7 +5,7 @@ const year_id = urlParams.get("year_id");
 
 const all_exams_this_year = $("#all_exams_this_year");
 
-//Form holding the year inputs
+//Variable holding the year inputs
 const year_form = $("#year_form");
 
 // Edit Year button to modify the years details.
@@ -14,7 +13,7 @@ const edit_academic_year = $("#edit_academic_year");
 
 let year_acroynm;
 
-//
+//Add Terms to Academic Year Form Name.
 const term_name = $("#term_name");
 
 async function init() {
@@ -22,6 +21,7 @@ async function init() {
   const request = await fetch(`../queries/get_year_details?year_id=${year_id}`);
   const response = await request.text();
   const parsed = JSON.parse(response);
+
   parsed.forEach((item) => {
     year.year_name = item.academic_name;
     year.created_at = item.created_at;
@@ -30,7 +30,8 @@ async function init() {
 
   return year;
 }
-const alert = $("#alert");
+
+const alerts = $("#alert");
 
 async function setYearDetails() {
   const year = await init();
@@ -47,8 +48,8 @@ async function setYearDetails() {
     $("#status").html(
       ` <span class="badge badge-pill badge-success">Active</span>`
     );
-    alert.html(`
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+    alerts.html(`
+            <div class="alert alert-secondary alert-dismissible fade show" role="alert">
               <strong>View Academic year ${year.year_name} and its terms. All the terms performance for the year ${year.year_name} in the school are defined on the table below.</strong>
             <hr>
               <p class="mb-0">Click on edit Academic year to modify or click on one of the terms 
@@ -59,7 +60,7 @@ async function setYearDetails() {
     $("#status").html(
       ` <span class="badge badge-pill badge-danger">InActive</span>`
     );
-    alert.html(`
+    alerts.html(`
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>View Academic year ${year.year_name} and its terms. All the terms performance for the year ${year.year_name} in the school are defined on the table below.</strong>
     <hr>
@@ -71,7 +72,7 @@ async function setYearDetails() {
 }
 setYearDetails();
 
-// Function to get the terms
+// FUNCTION TO GET THE TERMS AND PLACE THEM ON A SELECT OPTION.
 const get_terms = () => {
   $.ajax({
     url: "../queries/get_academic_terms.php",
@@ -94,7 +95,9 @@ const get_terms = () => {
     }
 
     arr.forEach((item) => {
-      term_name.append(`<option value="${item.id}">${item.name}</option>`);
+      term_name.append(
+        `<option value="${item.term_id}">${item.term_name}</option>`
+      );
     });
   });
 };
@@ -144,6 +147,7 @@ const formData = {
   year_id: year_id,
 };
 
+// TABLE HOLDING THE ACADEMICS YEAR TERMS.
 const term_year_table = $("#term_year_table").DataTable({
   ajax: {
     url: "./../queries/get_view_academic_year_terms.php",
@@ -155,26 +159,23 @@ const term_year_table = $("#term_year_table").DataTable({
     {
       targets: 1,
       data: {
-        name: "name",
-        term_year_id: "term_year_id",
+        term_name: "term_name",
+        academic_terms_id: "academic_terms_id",
       },
       render: (data) => {
-        return `<a href="./view_academic_year_term_performance?term_id=${data.term_year_id}&year_id=${year_id}">${data.name}</a>`;
+        return `<a href="./view_academic_year_term_performance?academic_term_id=${data.academic_terms_id}&year_id=${year_id}">${data.term_name}</a>`;
       },
     },
     {
       targets: 0,
       data: "created_at",
     },
+
     {
       targets: 2,
-      data: "created_by",
-    },
-    {
-      targets: 3,
-      data: "status",
+      data: "isActive",
       render: function (data) {
-        if (data == "1") {
+        if (data === "1") {
           return `<span class="badge badge-pill badge-success">Active</span>`;
         } else {
           return `<span class="badge badge-pill badge-danger">InActive</span>`;
@@ -182,7 +183,7 @@ const term_year_table = $("#term_year_table").DataTable({
       },
     },
     {
-      targets: 4,
+      targets: 3,
       data: {
         status: "status",
         term_year_id: "term_year_id",
@@ -218,7 +219,13 @@ const questionToast = {
           [
             "<button><b>YES</b></button>",
             function (instance, toast, button, e, inputs) {
-              instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              instance.hide(
+                {
+                  transitionOut: "fadeOut",
+                },
+                toast,
+                "button"
+              );
               resolve();
             },
             false,
@@ -226,7 +233,13 @@ const questionToast = {
           [
             "<button>NO</button>",
             function (instance, toast, button, e, inputs) {
-              instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              instance.hide(
+                {
+                  transitionOut: "fadeOut",
+                },
+                toast,
+                "button"
+              );
             },
           ],
         ],
@@ -273,7 +286,7 @@ function editTermFromYear(term_id, status) {
     });
   });
 }
-
+// TABLE HOLDING THE CLASSES THAT BELONG TO THE ACADEMIC YEAR WHOSE ID IS year_id.
 const class_end_year_table = $("#class_end_year_table").DataTable({
   ajax: {
     url: "./../queries/fetch_class_end_year_result.php",
@@ -282,6 +295,10 @@ const class_end_year_table = $("#class_end_year_table").DataTable({
     data: formData,
   },
   columnDefs: [
+    {
+      targets: 0,
+      data: "CreationDate",
+    },
     {
       targets: 1,
       data: {
@@ -303,10 +320,6 @@ const class_end_year_table = $("#class_end_year_table").DataTable({
     {
       targets: 4,
       data: "name",
-    },
-    {
-      targets: 0,
-      data: "CreationDate",
     },
   ],
 });
@@ -334,7 +347,7 @@ edit_academic_year.click(() => {
   });
 });
 
-get_all_exams_this_year();
+// get_all_exams_this_year();
 
 setInterval(() => {
   class_end_year_table.ajax.reload();
@@ -356,7 +369,7 @@ async function getAllStudentsRegisteredThisYear() {
   $("#all_students_registered_this_year").html(parsed);
 }
 
-getAllStudentsRegisteredThisYear();
+// getAllStudentsRegisteredThisYear();
 
 $(".edit_school_input").on("keypress", (e) => {
   $("#year_id").val(year_id);
