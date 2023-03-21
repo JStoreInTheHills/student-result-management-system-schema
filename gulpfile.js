@@ -159,9 +159,7 @@ function customJs() {
 
   var terms = gulp.src("./src/js/terms/*").pipe(gulp.dest("./dist/js/terms"));
 
-  // var classes = gulp
-  //   .src("./src/js/class/*")
-  //   .pipe(gulp.dest("./dist/js/classes"));
+  var classes = gulp.src("./src/js/class/*").pipe(gulp.dest("./dist/js/classes"));
 
   // var exam = gulp.src("./src/js/exam/*").pipe(gulp.dest("./dist/js/exams"));
 
@@ -172,9 +170,9 @@ function customJs() {
   // var result = gulp
   //   .src("./src/js/result/*")
   //   .pipe(gulp.dest("./dist/js/results"));
-  // var stream = gulp
-  //   .src("./src/js/stream/*")
-  //   .pipe(gulp.dest("./dist/js/streams"));
+  var stream = gulp
+    .src("./src/js/stream/*")
+    .pipe(gulp.dest("./dist/js/streams"));
   // var student = gulp
   //   .src("./src/js/students/*")
   //   .pipe(gulp.dest("./dist/js/students"));
@@ -184,11 +182,13 @@ function customJs() {
   //   .src("./src/js/subjects/*")
   //   .pipe(gulp.dest("./dist/js/subjects"));
 
-  // var teacher = gulp
-  //   .src("./src/js/teachers/*")
-  //   .pipe(gulp.dest("./dist/js/teachers"));
+  var teacher = gulp
+    .src("./src/js/teachers/*")
+    .pipe(gulp.dest("./dist/js/teachers"));
 
-  // var admin = gulp.src("./src/js/admin/*").pipe(gulp.dest("./dist/js/admin"));
+  var admin = gulp
+    .src("./src/js/user/*")
+    .pipe(gulp.dest("./dist/js/user"));
 
   // var settings = gulp
   //   .src("./src/js/settings/*")
@@ -200,15 +200,15 @@ function customJs() {
 
   return merge(
     // result,
-    // classes,
+    classes,
     // exam,
-    // stream,
+    stream,
     // student,
     // subjects,
     year,
-    // teacher,
+    teacher,
     // dashboard,
-    // admin,
+    admin,
     utils,
     terms,
     webfonts

@@ -223,10 +223,7 @@
                             </div>
 
                       
-                            <!------------------------------------------------------------------------------------------------->
-                            
-
-                   
+                            <!-------------------------------------------------------------------------------------------------> 
                     <!-- endo of row -->
 
 
@@ -239,7 +236,9 @@
             <?php include '../../../resources/views//footer.html' ?>
         </div>
         <!-- End of Content Wrapper -->
-        <?php #include '../../layouts/utils/logout_modal.html' ?>
+        
+        <?php include '../../resources/views/logout_modal.html' ?>
+
     </div>
     <!-- End of Page Wrapper -->
 

@@ -49,11 +49,9 @@ const year_table = $("#year_table").DataTable({
   
     {
       targets: 2,
-      data: {
-        status: "isActive",
-      },
+      data: "isActive",
       render: function (data) {
-        if (data.isActive == "1") {
+        if (data == "1") {
           return `<span class="badge badge-pill badge-success">Active</span>`;
         } else {
           return `<span class="badge badge-pill badge-danger">Closed</span>`;
