@@ -27,7 +27,7 @@ init();
 // variable holding the year DataTable.
 const year_table = $("#year_table").DataTable({
   ajax: {
-    url: "./queries/fetch_all_academic_years.php",
+    url: "./queries/academic_year/fetch_all_academic_years.php",
     dataSrc: "",
     type: "GET",
   },
@@ -245,7 +245,7 @@ year_form.validate({
   errorClass: "alert alert-danger",
   submitHandler: function (form) {
     $.ajax({
-      url: "./queries/add_academic_year.php",
+      url: "./queries/academic_year/add_academic_year.php",
       type: "POST",
       data: $(form).serialize(),
     }).done(function (response) {

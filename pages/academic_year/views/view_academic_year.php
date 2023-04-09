@@ -47,14 +47,14 @@
                         </form>
 
                         <div class="btn-group">
-                            <button class="btn btn-sm btn-primary" id="add-class-to-academic-year">Add Class to Academic Year</button>
-                            <button id="edit_academic_year" class="btn btn-sm btn-outline-danger"></button>
+
+                            <button id="edit_academic_year" class="btn btn-md btn-danger"></button>
                         </div>
                     </div>
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-3">
-                        <h1 id="creation_date" class="h5 mb-0 text-gray-600"> </h1>
-                        <h1 id="status" class="h5 mb-0"></h1>
+                        <h1 id="creation_date" class="h5 mb-0 texttexttexttext-gray-600"> </h1>
+                        <h1 id="status" class="h2 mb-0"></h1>
                     </div>
 
                     <hr class="my-2">
@@ -108,122 +108,131 @@
 
                     <nav class="mb-4">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-academic-term-tab" data-toggle="tab" href="#nav-academic-term"
-                                role="tab" aria-controls="nav-academic-term" aria-selected="true"> <span><i
-                                        class="fas fa-chalkboard "></i></span> Terms in the Academic Year</a>
-                            <a class="nav-item nav-link" id="nav-academic-year-performance-tab" data-toggle="tab" href="#nav-academic-year-performance"
-                                role="tab" aria-controls="nav-academic-year-performance" aria-selected="false"> <span><i
+                            <a class="nav-item nav-link " id="nav-academic-term-tab" data-toggle="tab"
+                                href="#nav-academic-term" role="tab" aria-controls="nav-academic-term"
+                                aria-selected="true"> <span><i class="fas fa-chalkboard "></i></span> Terms in the
+                                Academic Year</a>
+                            <a class="nav-item nav-link active" id="nav-academic-year-performance-tab" data-toggle="tab"
+                                href="#nav-academic-year-performance" role="tab"
+                                aria-controls="nav-academic-year-performance" aria-selected="false"> <span><i
                                         class="fas fa-book-reader"></i></span> Classes in the Academic Year</a>
                         </div>
                     </nav>
 
                     <!-- start of row -->
-                    
-                        
-                            <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-academic-term" role="tabpanel"
-                                    aria-labelledby="nav-academic-term-tab">
 
-                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                        <strong>All the Academic Terms for this year, are shown on the table below. </strong>
-                                        <hr>
-                                        <p class="mb-0">To add an academic term to the Academic Year. Choose the term from 
-                                        the option list on the right and click on Save. </p>
-                                        <hr>
-                                        <p><strong> Note! Terms that are inActive will not appear on this option list.</strong></p>
-                                    </div>
 
-                                    <div class="row">
-                                    
-                                        <div class="col-lg-8">
-                                            <div class="card shadow mb-4">
-                                                <div class="card-header text-primary font-weight-bold">
-                                                    Academic Year Terms
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-striped" width="100%" cellspacing="0"
-                                                            id="term_year_table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Date Added</th>
-                                                                    <th>Term Name</th>
-                                                                    <th>Status</th>
-                                                                    <th>Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade " id="nav-academic-term" role="tabpanel"
+                            aria-labelledby="nav-academic-term-tab">
 
-                                        <div class="col-lg-4">
-                                            <div class="card mb-4">
-                                                <div class="card-header text-primary font-weight-bold">
-                                                    Add Terms to Academic Year
-                                                </div>
-                                                <div class="card-body">
-                                                    <span id="card_alert"></span>
-                                                    <form id="year_form" class="user">
-                                                        <div class="form-group row">
-                                                            <div class="col-md-12 mb-3 mb-sm-0">
-                                                                <label class="text-primary" for="term_name">Choose Term Name:</label>
-                                                                <select class="form-control" name="term_name" id="term_name">
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="btn-group float-right">
-                                                            <button class="btn btn-primary" name="submit" type="submit"
-                                                                id="form_submit">Save</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                <strong>All the Academic Terms for this year, are shown on the table below. Note! Terms
+                                    that are inActive will not appear on this option list. </strong>
+                                <hr>
+                                <p class="mb-0">To add an academic term to the Academic Year. Choose the term from
+                                    the option list on the right and click on Save. </p>
+                            </div>
 
-                                     </div>
+                            <div class="row">
 
-                                </div>
-
-                                <div class="tab-pane fade" id="nav-academic-year-performance" role="tabpanel"
-                                    aria-labelledby="nav-academic-year-performance-tab">
-
-                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                        <strong>All the Classes for this year, are shown on the table below. </strong>
-                                        <hr>
-                                        <p class="mb-0">To add a class to this academic year. Click the Add class to Academic Year
-                                        and add the class. Lastly click on the save button.</p>
-                                    </div>
-
+                                <div class="col-lg-8">
                                     <div class="card shadow mb-4">
                                         <div class="card-header text-primary font-weight-bold">
-                                            End Year Class Performance
+                                            Academic Year Terms
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
                                                 <table class="table table-striped" width="100%" cellspacing="0"
-                                                    id="class_end_year_table">
+                                                    id="term_year_table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Date Class Added to the Year</th>
-                                                            <th>Class Name</th>
-                                                            <th>Class Code</th>
-                                                            <th>Class Teacher</th>
-                                                            <th>Stream Name</th>
-                                                            <th>Class Status</th>
+                                                            <th>Date Added</th>
+                                                            <th>Term Name</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
+                                <div class="col-lg-4">
+                                    <div class="card mb-4">
+                                        <div class="card-header text-primary font-weight-bold">
+                                            Add Terms to Academic Year
+                                        </div>
+                                        <div class="card-body">
+                                            <span id="card_alert"></span>
+                                            <form id="year_form" class="user">
+                                                <div class="form-group row">
+                                                    <div class="col-md-12 mb-3 mb-sm-0">
+                                                        <label class="text-primary" for="term_name">Choose Term
+                                                            Name:</label>
+                                                        <select class="form-control" name="term_name" id="term_name">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="btn-group float-right">
+                                                    <button class="btn btn-primary" name="submit" type="submit"
+                                                        id="form_submit">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade show active" id="nav-academic-year-performance" role="tabpanel"
+                            aria-labelledby="nav-academic-year-performance-tab">
+
+                            <div class="alert alert-secondary alert-dismissible show" role="alert">
+                                <strong>All the Classes for this year, are shown on the table below. The fields
+                                    include the class, the class teacher, the class stream and the day the class was
+                                    posted to academic year.</strong>
+                                <hr>
+                                <p class="mb-0">To add a class to this academic year. Click the Add class to Academic
+                                    Year
+                                    and add the class. Lastly click on the save button.</p>
+                            </div>
+
+                            <div class="card shadow mb-4">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Classes in the academic year</h6>
+                                    <button class="btn btn-md btn-outline-primary" id="add-class-to-academic-year"
+                                        data-toggle="modal" data-target="#add_class_to_year_modal">Add Class to Academic
+                                        Year</button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" width="100%" cellspacing="0"
+                                            id="classes_table_">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date Class Added to the Year</th>
+                                                    <th>Class Name</th>
+                                                    <th>Class Code</th>
+                                                    <th>Class Teacher</th>
+                                                    <th>Stream Name</th>
+                                                    <th>Class Status</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 
-                      
-                            <!-------------------------------------------------------------------------------------------------> 
+                        </div>
+                    </div>
+
+
+                    <!------------------------------------------------------------------------------------------------->
                     <!-- endo of row -->
 
 
@@ -236,11 +245,16 @@
             <?php include '../../../resources/views//footer.html' ?>
         </div>
         <!-- End of Content Wrapper -->
-        
-        <?php include '../../resources/views/logout_modal.html' ?>
+
+
 
     </div>
     <!-- End of Page Wrapper -->
+
+    <?php # include '../../resources/views/logout_modal.html' ?>
+
+
+    <?php include "./_partials/add_class_to_academic_year_modal.html" ?>
 
 
     <script src="/dist/js/main.min.js"></script>

@@ -5,6 +5,10 @@ const year_id = urlParams.get("year_id");
 
 const all_exams_this_year = $("#all_exams_this_year");
 
+const year_id_input = $("#year_id_input").val(year_id);
+
+
+
 //Variable holding the year inputs
 const year_form = $("#year_form");
 
@@ -14,11 +18,31 @@ const edit_academic_year = $("#edit_academic_year");
 let year_acroynm;
 
 //Add Terms to Academic Year Form Name.
-const term_name = $("#term_name");
+const term_name = $("#term_name").select2({
+  placeholder: "Type to search an academic term",
+  theme: "bootstrap4",
+  width: "100%",
+  ajax: {
+    url: "../queries/view_academic_year/get_academic_terms.php",
+    type: "POST",
+    dataType: "json",
+    delay: 250,
+    data: function(params){
+      return {
+        searchTerm: params.term
+      };
+    }, processResults: function(response){
+      return{
+        results: response,
+      };
+    }, 
+    cache: true,
+  }
+});
 
 async function init() {
   const year = {};
-  const request = await fetch(`../queries/get_year_details?year_id=${year_id}`);
+  const request = await fetch(`../queries/academic_year/get_year_details.php?year_id=${year_id}`);
   const response = await request.text();
   const parsed = JSON.parse(response);
 
@@ -49,7 +73,7 @@ async function setYearDetails() {
       ` <span class="badge badge-pill badge-success">Active</span>`
     );
     alerts.html(`
-            <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
               <strong>View Academic year ${year.year_name} and its terms. All the terms performance for the year ${year.year_name} in the school are defined on the table below.</strong>
             <hr>
               <p class="mb-0">Click on edit Academic year to modify or click on one of the terms 
@@ -73,36 +97,36 @@ async function setYearDetails() {
 setYearDetails();
 
 // FUNCTION TO GET THE TERMS AND PLACE THEM ON A SELECT OPTION.
-const get_terms = () => {
-  $.ajax({
-    url: "../queries/get_academic_terms.php",
-    type: "GET",
-  }).done((resp) => {
-    const arr = JSON.parse(resp);
+// const get_terms = () => {
+//   $.ajax({
+//     url: "../queries/view_academic_year/get_academic_terms.php",
+//     type: "GET",
+//   }).done((resp) => {
+//     const arr = JSON.parse(resp);
 
-    if (arr.length == 0) {
-      $("#card_alert")
-        .html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>Terms have not yet been added. </strong>
-        <hr>
-          <p class="mb-0">Please add terms to proceed</p>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        </div>`);
+//     if (arr.length == 0) {
+//       $("#card_alert")
+//         .html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+//           <strong>Terms have not yet been added. </strong>
+//         <hr>
+//           <p class="mb-0">Please add terms to proceed</p>
+//         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//             <span aria-hidden="true">&times;</span>
+//         </button>
+//         </div>`);
 
-      $("#form_submit").prop(`disable`);
-    }
+//       $("#form_submit").prop(`disable`);
+//     }
 
-    arr.forEach((item) => {
-      term_name.append(
-        `<option value="${item.term_id}">${item.term_name}</option>`
-      );
-    });
-  });
-};
+//     arr.forEach((item) => {
+//       term_name.append(
+//         `<option value="${item.term_id}">${item.term_name}</option>`
+//       );
+//     });
+//   });
+// };
 
-get_terms();
+// get_terms();
 
 year_form.submit((event) => {
   const formData = {
@@ -110,7 +134,7 @@ year_form.submit((event) => {
     term_id: term_name.val(),
   };
   $.ajax({
-    url: "../queries/add_term_to_year.php",
+    url: "../queries/view_academic_year/add_term_to_year.php",
     type: "GET",
     dataSrc: "",
     data: formData,
@@ -150,13 +174,12 @@ const formData = {
 // TABLE HOLDING THE ACADEMICS YEAR TERMS.
 const term_year_table = $("#term_year_table").DataTable({
   ajax: {
-    url: "./../queries/get_view_academic_year_terms.php",
+    url: "./../queries/view_academic_year/get_view_academic_year_terms.php",
     dataSrc: "",
     type: "GET",
     data: formData,
   },
-  columnDefs: [
-    {
+  columnDefs: [{
       targets: 1,
       data: {
         term_name: "term_name",
@@ -219,8 +242,7 @@ const questionToast = {
           [
             "<button><b>YES</b></button>",
             function (instance, toast, button, e, inputs) {
-              instance.hide(
-                {
+              instance.hide({
                   transitionOut: "fadeOut",
                 },
                 toast,
@@ -233,8 +255,7 @@ const questionToast = {
           [
             "<button>NO</button>",
             function (instance, toast, button, e, inputs) {
-              instance.hide(
-                {
+              instance.hide({
                   transitionOut: "fadeOut",
                 },
                 toast,
@@ -287,40 +308,48 @@ function editTermFromYear(term_id, status) {
   });
 }
 // TABLE HOLDING THE CLASSES THAT BELONG TO THE ACADEMIC YEAR WHOSE ID IS year_id.
-const class_end_year_table = $("#class_end_year_table").DataTable({
+const classes_table_ = $("#classes_table_").DataTable({
   ajax: {
-    url: "./../queries/fetch_class_end_year_result.php",
+    url: "../queries/view_academic_year/get_all_classes_for_classes_datatable_.php",
     dataSrc: "",
     type: "GET",
     data: formData,
   },
-  columnDefs: [
-    {
+  columnDefs: [{
       targets: 0,
-      data: "CreationDate",
+      data: "created_at"
     },
     {
       targets: 1,
-      data: {
-        ClassName: "ClassName",
-        id: "id",
-      },
-      render: function (data) {
-        return `<a href="./view_class_academic_year_performance?cid=${data.id}&yid=${year_id}">${data.ClassName}</a>`;
-      },
+      data: "class_name"
     },
     {
       targets: 2,
-      data: "ClassNameNumeric",
+      data: "class_code"
     },
     {
       targets: 3,
-      data: "ClassTeacher",
+      data: {
+        teacher_id: "teacher_id",
+        first_name: "first_name",
+        second_name: "second_name",
+        last_name: "last_name"
+      },
+      render: function (data) {
+        return `<a href="/${data.teacher_id}"> ${data.first_name} ${data.second_name} ${data.last_name}</a>`
+      }
     },
     {
       targets: 4,
-      data: "name",
+      data: "stream_name"
     },
+
+    {
+      targets: 5,
+      data: "isActive"
+    }
+
+
   ],
 });
 
@@ -386,28 +415,28 @@ $(".edit_school_input").on("keypress", (e) => {
           data: $(form).serialize(),
         }).done((response) => {
           const arr = JSON.parse(response);
-          if (arr.success == true) {
-            iziToast.success({
-              position: "bottomLeft",
-              message: arr.message,
-              messageColor: "black",
-              overlay: true,
-              zindex: 999,
-              progressBar: false,
-              onClosing: () => {
-                setYearDetails();
-              },
-            });
-          } else {
-            iziToast.error({
-              position: "bottomLeft",
-              message: arr.message,
-              messageColor: "black",
-              overlay: true,
-              zindex: 999,
-              progressBar: false,
-            });
-          }
+            if (arr.success == true) {
+              iziToast.success({
+                position: "bottomLeft",
+                message: arr.message,
+                messageColor: "black",
+                overlay: true,
+                zindex: 999,
+                progressBar: false,
+                onClosing: () => {
+                  setYearDetails();
+                },
+              });
+            } else {
+              iziToast.error({
+                position: "bottomLeft",
+                message: arr.message,
+                messageColor: "black",
+                overlay: true,
+                zindex: 999,
+                progressBar: false,
+              });
+            }
         });
       },
     });
@@ -439,3 +468,109 @@ function deleteTermFromYear(id) {
     }
   });
 }
+
+const class_id = $("#class_id").select2({
+  width: "100%",
+  theme: "bootstrap4",
+  placeholder: "Type class name to search",
+  ajax: {
+    url: "../queries/view_academic_year/get_classes_to_be_added_to_academic_year_using_select2.php",
+    type: "POST",
+    dataType: "json",
+    delay: 250,
+    data: function (params) {
+      return {
+        searchTerm: params.term,
+      };
+    },
+    processResults: function (response) {
+      return {
+        results: response,
+      };
+    },
+    cache: true,
+  },
+});
+
+const class_teacher_id = $("#class_teacher_id").select2({
+  theme: "bootstrap4",
+  placeholder: "Type teachers name to search",
+  width: "100%",
+  ajax: {
+    url: "../queries/view_academic_year/get_teachers_to_be_added_to_academic_year.php",
+    type: "POST",
+    dataType: "json",
+    delay: 250,
+    data: function (params) {
+      return {
+        searchTerm: params.term,
+      };
+    },
+    processResults: function (response) {
+      return {
+        results: response,
+      };
+    },
+    cache: true,
+  }
+
+});
+
+const add_class_to_year_form = $("#add_class_to_year_form").validate({
+  rules: {
+    class_id: "required",
+    class_teacher_id: "required",
+  },
+  message: {
+    class_id: "This field is reqired",
+    class_teacher_id: "Teachers is required"
+  },
+  errorClass: "alert alert-danger",
+  submitHandler: function (form) {
+    $.ajax({
+      url: "../queries/view_academic_year/add_classes_to_academic_year.php",
+      type: "POST",
+      data: $(form).serialize(),
+    }).done(function (response) {
+      var r = JSON.parse(response);
+      if (r.success === true) {
+        iziToast.success({
+          message: r.message,
+          position: "bottomLeft",
+          type: "Success",
+          transitionIn: "bounceInLeft",
+          overlay: true,
+          zindex: 999,
+          messageColor: "black",
+          onClosing: function () {
+            classes_table_.ajax.reload(null, false);
+          },
+          progressBar: false,
+        });
+      } else {
+        iziToast.error({
+          message: r.message,
+          position: "bottomLeft",
+          type: "Error",
+          overlay: true,
+          zindex: 999,
+          transitionIn: "bounceInLeft",
+          progressBar: false,
+          messageColor: "black",
+        });
+      }
+    });
+  },
+  invalidHandler: function (event, validator) {
+    var errors = validator.numberOfInvalids();
+    if (errors) {
+      var message =
+        errors == 1 ? "You missed 1 field" : `You missed ${errors} fields`;
+      $("div.errors span").html(message);
+      $("div.errors").show();
+    } else {
+      $("div.errors").hide();
+    }
+  },
+
+})

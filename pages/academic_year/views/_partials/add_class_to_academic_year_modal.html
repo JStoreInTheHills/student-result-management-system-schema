@@ -1,0 +1,60 @@
+<div id="add_class_to_year_modal" class="modal fade fixed-left" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-aside modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary">Add Class To Academic Year.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning" role="alert">
+                    <p>
+                        <strong>Use this form to add a class to an academic year. All the fields with * are required.
+                        </strong>
+                    </p>
+                    <hr />
+                    <p class="mb-0">Click on Save Changes to save .</p>
+                </div>
+
+                <hr class="my-2" />
+
+                <form id="add_class_to_year_form" autocomplete="off">
+                    <input type="hidden" name="year_id_input" id="year_id_input" />
+
+
+                    <div class="form-group">
+                        <label for="class_id" class="text-primary">Choose a class*: </label>
+                        <select name="class_id" id="class_id" class="form-control"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="class_teacher_id" class="text-primary">Choose a teacher*:
+                        </label>
+                        <select name="class_teacher_id" id="class_teacher_id" class="form-control"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="max_no_student_" class="text-primary">Maximum number of students for class: </label>
+                        <input type="number" name="max_no_student_" id="max_no_student_" class="form-control" placeholder="50">
+                         <small id="emailHelp" class="form-text text-muted">Enter the Maximum number of students that can be admitted to this class</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="max_no_of_exams_" class="text-primary">Maximum number of exams for class: </label>
+                        <input type="number" name="max_no_of_exams_" id="max_no_of_exams_" class="form-control" placeholder="30">
+                         <small id="emailHelp" class="form-text text-muted">Enter the maximum number of exams that the class can sit for.</small>
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <div class="btn-group">
+                        <button class="btn btn-md btn-primary" type="submit">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
