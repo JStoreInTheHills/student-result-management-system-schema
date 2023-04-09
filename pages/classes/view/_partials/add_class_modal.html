@@ -1,0 +1,52 @@
+ <div id="add_new_stream" class="modal fade fixed-left" tabindex="-1" role="dialog" data-backdrop="static">
+     <div class="modal-dialog modal-dialog-aside modal-md" role="document">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title text-primary" id="new_class_modal">
+                     <span><i class="fas fa-chalkboard"></i></span> Add a new Class</h5>
+                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                 </button>
+             </div>
+
+             <div class="modal-body">
+
+                 <div class="alert alert-info alert-dismissible fade show" role="alert">
+                     <strong>Use this form to add a new class.</strong>
+                     <hr>
+                     <p class="mb-0">Field with the * mark are required</p>
+                 </div>
+                 <hr>
+                 <form id="class_form" class="user">
+                     <div class="form-group">
+                         <label class="text-primary" for="class_name">Class Name*</label>
+                         <input type="text" id="class_name" class="form-control" name="class_name"
+                             placeholder="E.g 'Raudha' , 'Thanawii' " required>
+                     </div>
+
+                     <div class="form-group">
+                         <label class="text-primary" for="class_code">Class Unique Code*</label>
+                         <input type="text" id="class_code" class="form-control" name="class_code"
+                             placeholder="E.g '0CRB', 'OCRG'" required>
+                         <small id="emailHelp" class="form-text text-muted">This is a unique identifier for a class. e.g
+                             0SUD</small>
+                     </div>
+
+                     <div class="form-group">
+                         <label class="text-primary" for="stream_id">Choose a Stream*</label>
+                         <select name="stream_id" id="stream_id" class="form-control">
+                         </select required>
+                         <small id="emailHelp" class="form-text text-muted">This places the class in the above
+                             stream</small>
+                     </div>
+
+                     <div class="btn-group">
+                         <button class="btn btn-primary" type="submit">Save</button>
+                     </div>
+                 </form>
+             </div>
+
+
+         </div>
+     </div>
+ </div>

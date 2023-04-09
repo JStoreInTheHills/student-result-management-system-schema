@@ -4,48 +4,16 @@
 
 const title = $("#title").html("Manage || Classes");
 
-const select = document.getElementById("stream_id");
-
-
-const classForm = $("#class_form");
-
-const stream_id = $("#stream_id");
-
-// const streamFunction = () => {
-//   $.ajax({
-//     url: "./queries/fetch_streams.php",
-//     type: "GET",
-//   })
-//     .done((response) => {
-//       let data = JSON.parse(response);
-//       $.each(data, function (i, d) {
-//         select.append(
-//           `<option value="${data.stream_id}"> ${data.name} </option>`
-//         );
-//       });
-//     })
-//     .fail(() => {
-//       iziToast.error({
-//         type: "Error",
-//         position: "topRight",
-//         transitionIn: "bounceInLeft",
-//         message: "Error fetching streams.. Refresh the page.",
-//       });
-//     });
-// };
-
-// streamFunction();
-
+// classtable datatables. 
 const classTable = $("#class_table").DataTable({
   autoWidth: true,
   info: true,
   ajax: {
-    url: "queries/get_all_classes.php",
+    url: "queries/classes/get_all_classes.php",
     type: "GET",
     dataSrc: "",
   },
-  columnDefs: [
-    {
+  columnDefs: [{
       targets: 0,
       data: "created_at",
     },
@@ -55,7 +23,7 @@ const classTable = $("#class_table").DataTable({
         class_name: "class_name",
         class_id: "class_id",
       },
-     render: function (data) {
+      render: function (data) {
         return `<a href="./view/class_view?classid=${data.class_id}">${data.class_name}</a>`;
       },
     },
@@ -70,9 +38,9 @@ const classTable = $("#class_table").DataTable({
     {
       targets: 4,
       data: "isActive",
-      render: function (data){
-        if(data === "1"){
-           return `<span class="badge badge-pill badge-success">Active</span>`;
+      render: function (data) {
+        if (data === "1") {
+          return `<span class="badge badge-pill badge-success">Active</span>`;
         } else {
           return `<span class="badge badge-pill badge-danger">Closed</span>`;
         }
@@ -81,17 +49,13 @@ const classTable = $("#class_table").DataTable({
   ],
 });
 
-setInterval(() => {
-  classTable.ajax.reload(null, false);
-  streamFunction();
-}, 1000000);
-
-
-stream_id.select2({
-  placeholder: "Type to Search Class",
+// select2 to pick the streams to populate. 
+const stream_id = $("#stream_id").select2({
+  placeholder: "Type to Search Stream",
   theme: "bootstrap4",
+  width: "100%",
   ajax: {
-    url: "queries/get_all_class_during_add_stream.php",
+    url: "queries/classes/get_all_class_during_add_stream.php",
     type: "POST",
     dataType: "json",
     delay: 250,
@@ -109,7 +73,7 @@ stream_id.select2({
   },
 });
 
-classForm.validate({
+const classForm = $("#class_form").validate({
   rules: {
     class_name: {
       required: true,
@@ -138,10 +102,10 @@ classForm.validate({
 
   submitHandler: function (form) {
     $.ajax({
-      url: "queries/add_class.php",
-      method: "POST",
-      data: $(form).serialize(),
-    })
+        url: "queries/classes/add_class.php",
+        method: "POST",
+        data: $(form).serialize(),
+      })
       .done(function (response) {
         let arr = JSON.parse(response);
         if (arr.success === true) {
@@ -175,29 +139,6 @@ classForm.validate({
   },
 });
 
-const teachers_id = $("#teachers_id");
-teachers_id.select2({
-  placeholder: "Type to search for a teacher",
-  theme: "bootstrap4",
-  ajax: {
-    url: "queries/class/get_all_teachers_during_add_stream.php",
-    type: "POST",
-    dataType: "json",
-    delay: 250,
-    data: function (params) {
-      return {
-        searchTerm: params.term,
-      };
-    },
-    processResults: function (response) {
-      return {
-        results: response,
-      };
-    },
-    cache: true,
-  },
-});
-
 $('[data-toggle="datepicker"]').datepicker({
   format: "dd-mm-yyyy",
   autoHide: true,
@@ -209,8 +150,7 @@ let toast = {
       iziToast.error({
         title: "Warning!",
         titleSize: 40,
-        message:
-          "Are you sure you want to delete this stream? This process is Irreversible",
+        message: "Are you sure you want to delete this stream? This process is Irreversible",
         timeout: 200000,
         close: false,
         overlay: true,
@@ -219,7 +159,9 @@ let toast = {
           [
             "<button><b>YES</b></button>",
             function (instance, toast, button, e, inputs) {
-              instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              instance.hide({
+                transitionOut: "fadeOut"
+              }, toast, "button");
               resolve();
             },
             false,
@@ -227,7 +169,9 @@ let toast = {
           [
             "<button>NO</button>",
             function (instance, toast, button, e, inputs) {
-              instance.hide({ transitionOut: "fadeOut" }, toast, "button");
+              instance.hide({
+                transitionOut: "fadeOut"
+              }, toast, "button");
             },
           ],
         ],
@@ -239,12 +183,12 @@ let toast = {
 const del = (data) => {
   toast.question().then(function () {
     $.ajax({
-      url: "./queries/delete_class.php",
-      type: "POST",
-      data: {
-        id: data,
-      },
-    })
+        url: "./queries/delete_class.php",
+        type: "POST",
+        data: {
+          id: data,
+        },
+      })
       .done(function (response) {
         let s = JSON.parse(response);
         if (s.success === true) {
@@ -274,4 +218,9 @@ const del = (data) => {
       });
   });
 };
-// });
+
+
+setInterval(() => {
+  classTable.ajax.reload(null, false);
+  streamFunction();
+}, 1000000);

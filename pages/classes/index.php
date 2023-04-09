@@ -17,7 +17,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-         <?php include "../../resources/views/sidebar.html"; ?>
+        <?php include "../../resources/views/sidebar.html"; ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -30,24 +30,23 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-2">
+                        <a class="btn btn-md text-primary mb-2" onclick="goBack()"> <i class="fas fa-arrow-left"></i>
+                            Back to previous page</a>
+                    </div>
+
                     <div class="d-sm-flex align-items-center justify-content-between mb-2">
                         <h1 class="h3 text-gray-800">Manage All Classes </h1>
-                        <div class="btn-group">
-                            <button data-toggle="modal" data-target="#add_new_stream" class="btn btn-sm btn-primary">
-                                Add New Classes
-                            </button>
-                           
-                        </div>
-
                     </div>
 
                     <div class="alert alert-info alert-dismissible fade show mb-2" role="alert">
                         <strong>Use this page to manage all your classes in the school. </strong>
                         <hr>
                         <p class="mb-0">The table below holds all the classes in the school, use it to select and
-                        view more details about a class or modify existing classes. To add a new class, click the 
-                        Add New Class button on the right side.</p>
-                        
+                            view more details about a class or modify existing classes. To add a new class, click the
+                            Add New Class button on the right side.</p>
+
                     </div>
 
                     <nav aria-label="breadcrumb">
@@ -64,9 +63,16 @@
                             <h6 class="m-0 font-weight-bold text-primary">
                                 <span><i class="fas fa-chalkboard-teacher"></i></span>
                                 All Streams</h6>
-                             <button class="btn btn-outline-primary btn-sm">
-                                <span><i class="fas fa-file-pdf"></i></span> Generate Report
-                            </button>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button class="btn btn-outline-primary btn-sm">
+                                    <span><i class="fas fa-file-pdf"></i></span> Generate Report
+                                </button>
+
+                                <button data-toggle="modal" data-target="#add_new_stream"
+                                    class="btn btn-sm btn-primary">
+                                    Add New Classes
+                                </button>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -98,60 +104,11 @@
         </div>
         <!-- End of Content Wrapper -->
 
-        <!-- New Class Modal-->
-        <div class="modal fade" id="add_new_stream" data-backdrop="static" tabindex="-1" role="dialog"
-            aria-labelledby="new_class_modal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-primary" id="new_class_modal">
-                            <span><i class="fas fa-chalkboard"></i></span> Add a new Class</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <div class="alert alert-info alert-dismissible fade show" role="alert">
-                            <strong>Use this form to add a new class.</strong>
-                            <hr>
-                            <p class="mb-0">Field with the * mark are required</p>
-                        </div>
-                        <hr>
-                        <form id="class_form" class="user">
-                                <div class="form-group">
-                                    <label class="text-primary" for="class_name">Class Name*</label>
-                                    <input type="text" id="class_name" class="form-control" name="class_name"
-                                        placeholder="E.g 'Raudha' , 'Thanawii' ">
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="text-primary" for="class_code">Class Unique Code*</label>
-                                    <input type="text" id="class_code" class="form-control"
-                                        name="class_code" placeholder="E.g '0CRB', 'OCRG'">
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="text-primary" for="stream_id">Choose a Stream*</label>
-                                    <select style="width:100%" name="stream_id" id="stream_id" class="form-control">
-                                    </select>
-                                </div>
-
-                                <div class="btn-group">
-                                    <button class="btn btn-primary" type="submit">Save</button>
-                                </div>
-                        </form>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
+        <?php include "./view/_partials/add_class_modal.html" ?>
     </div>
     <!-- End of Page Wrapper -->
 
-    <?php include '../layouts/utils/logout_modal.html'; ?>
+    <?php #include '../layouts/utils/logout_modal.html'; ?>
 
     <script src="/dist/js/main.min.js"></script>
     <script src="/dist/js/utils/utils.js"></script>
