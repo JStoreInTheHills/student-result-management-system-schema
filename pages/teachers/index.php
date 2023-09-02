@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <?php include "../../resources/views/css_files.html";?>
+<?php include "../../resources/views/css_files.html";?>
 
 <body id="page-top">
 
@@ -35,21 +35,16 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        <a class="btn btn-md text-primary mb-2" onclick="goBack()"> <i class="fas fa-arrow-left"></i>
+                            Back
+                            to previous page</a>
+                    </div>
+
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800" id="heading"> <span><i class="fas fa-users"></i></span>
-                            Manage ~ Teachers
+                            Manage All Teachers
                         </h1>
-                        <div class="btn-group">
-
-                            <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#add_class_teacher">
-                                <span><i class="fas fa-users"></i> </span> Add New Teachers
-                            </button>
-
-                            <a class="btn btn-outline-primary btn-xs" target="_blank"
-                                href="/reports/teacher/all_teachers">
-                                <span><i class="fas fa-file-pdf"></i> </span> Print Report</a>
-
-                        </div>
                     </div>
 
                     <nav aria-label="breadcrumb mb-3">
@@ -92,9 +87,25 @@
 
                         <div class="col-lg-12">
                             <div id="main_content" class="card shadow mb-4">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="mx font-weight-bold text-primary"> <span><i class="fas fa-users"></i></span>
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="mx font-weight-bold text-primary"> <span><i
+                                                class="fas fa-users"></i></span>
                                         All Teachers</h6>
+
+
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a class="btn btn-outline-primary btn-xs" target="_blank"
+                                            href="/reports/teacher/all_teachers">
+                                            <span><i class="fas fa-file-pdf"></i> </span> Print Report</a>
+
+                                        <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#add_class_teacher">
+                                            <span><i class="fas fa-users"></i> </span> Add New Teachers
+                                        </button>
+                                    </div>
+
+
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -102,12 +113,12 @@
                                             cellspacing="0">
                                             <thead>
                                                 <tr>
+                                                    <th>Created At</th>
                                                     <th>Teachers Name</th>
                                                     <th>ID Number</th>
-                                                    <th>Gender</th>
                                                     <th>Email Address</th>
                                                     <th>Phone Number</th>
-                                                    <th>Actions</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -126,124 +137,21 @@
             </div>
             <!-- End of Main Content -->
 
-           <?php include '../../resources/views/footer.html' ?>
+            <?php include '../../resources/views/footer.html' ?>
         </div>
         <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
 
-     <?php include '../../resources/views/logout_modal.html' ?>
+    <?php include '../../resources/views/logout_modal.html' ?>
 
-    <div class="modal fade" id="add_class_teacher" data-backdrop="static" tabindex="-1" role="dialog"
-        aria-labelledby="class_teacher_modal" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-primary" id="class_teacher_modal">
-                        <span><i class="fas fa-users"></i></span> Add Teacher</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <form id="teachers_form">
-
-                        <div class="alert alert-info alert-dismissible fade show" role="alert">
-                            <strong>Before you add a teacher, first add a user in the Users module.</strong>
-                            <hr>
-                            Click here <a href="/admin/pages/new_user" class="alert-link">Users</a> 
-                                to add a new user before you continue.
-
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <hr>
-                        <div class="row">
-
-
-
-
-                            <div class="form-group col-md-12">
-                                <span><i class="fas fa-chalkboard-teacher"></i></span> <label for="teachers_name"
-                                    class="text-primary">Assign Teacher to User:
-                                </label>
-                                <select name="teachers_userId" id="teachers_userId" class="form-control"></select>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <span><i class="fas fa-user mr-2"></i></span>
-                        <label for="teachers_name" class="text-primary">Personal Information </label>
-
-                        <div class="form-group">
-                            <label class="text-primary" for="teachers_name">Teachers Name: </label>
-                            <input type="text" name="teachers_name" id="teachers_name" class="form-control"
-                                placeholder="Enter teachers full name">
-                        </div>
-                        <div class="form-group">
-                            <label class="text-primary" for="teachers_name">Teachers Identification Number (ID):
-                            </label>
-                            <input type="number" name="teachers_id" id="teachers_id" class="form-control"
-                                placeholder="Enter teachers ID number">
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="text-primary" for="teachers_name">Teachers Phone Number: </label>
-                                <input type="tel" name="teachers_phoneNumber" id="teachers_phoneNumber"
-                                    class="form-control" placeholder="Enter teachers phone number">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="text-primary" for="gender">Choose Gender: </label>
-                                <select class="form-control" name="gender" id="gender">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <span><i class="fas fa-address-book mr-2"></i></span> <label for="teachers_name"
-                            class="text-primary">Physical Address </label>
-
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="text-primary" for="teachers_name">Address: </label>
-                                <input type="text" name="physicalAddress" id="physicalAddress" class="form-control">
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label class="text-primary" for="teachers_name">County: </label>
-                                <select name="county_id" id="county_id" class="form-control">
-                                </select>
-                            </div>
-
-                        </div>
-
-
-
-
-                    </form>
-
-                </div>
-
-                <div class="modal-footer btn-group">
-                    <button class="btn btn-dark" type="button" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" type="submit" id="add_teacher_submit">
-                        Save
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php include './_partials/add_new_teacher_modal.html'?>
 
     <script src="/dist/js/main.min.js"></script>
     <script src="/dist/js/utils/utils.js"></script>
     <script src="/dist/js/teachers/teachers.js"></script>
-    
+
 </body>
 
 </html>

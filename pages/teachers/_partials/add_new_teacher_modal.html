@@ -1,0 +1,75 @@
+<div id="add_class_teacher" class="modal fade fixed-left" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-aside modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary" id="class_teacher_modal">
+                    <span><i class="fas fa-users"></i></span> Add New Teacher</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Use this form to add a New Teacher. Before you add a teacher, first add a user in the
+                        Users module.</strong>
+                    <hr>
+                    Click <a href="/pages/users" class="alert-link">Users</a>
+                    to add a new user before you continue.
+                </div>
+                <hr>
+
+                <form id="teachers_form" class="user">
+
+                    <div class="form-group">
+                        <span><i class="fas fa-chalkboard-teacher"></i></span> <label for="teachers_name"
+                            class="text-primary">Assign Teacher to User:
+                        </label>
+                        <select name="teachers_userId" id="teachers_userId" class="form-control"></select>
+                    </div>
+
+                    <hr>
+
+                   
+                        <div class="form-group">
+                            <label class="text-primary" for="firstname">First Name: </label>
+                            <input type="text" name="firstname" id="firstname" class="form-control"
+                                placeholder="Enter first name">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-primary" for="middlename">Middle Name: </label>
+                            <input type="text" name="middlename" id="middlename" class="form-control"
+                                placeholder="Enter middle name">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-primary" for="lastname">Last Name: </label>
+                            <input type="text" name="lastname" id="lastname" class="form-control"
+                                placeholder="Enter last name">
+                        </div>
+                  
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="text-primary" for="teachers_name">Teachers Phone Number: </label>
+                            <input type="tel" name="teachers_phoneNumber" id="teachers_phoneNumber" class="form-control"
+                                placeholder="Enter teachers phone number">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="text-primary" for="teachers_name">Identification Number (ID):
+                            </label>
+                            <input type="number" name="teachers_id" id="teachers_id" class="form-control"
+                                placeholder="Enter teachers ID number">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit" id="add_teacher_submit">
+                        Save
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

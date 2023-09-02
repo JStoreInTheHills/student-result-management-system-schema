@@ -64,7 +64,6 @@
                                         <table class="table table-striped" width="100%" cellspacing="0" id="year_table">
                                             <thead>
                                                 <tr>
-
                                                     <th>Created At</th>
                                                     <th>Year Name</th>
                                                     <th>Year Status</th>                                                  

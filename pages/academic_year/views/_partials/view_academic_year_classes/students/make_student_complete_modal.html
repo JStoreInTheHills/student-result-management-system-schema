@@ -1,0 +1,42 @@
+<div id="mark_student_as_complete_modal" class="modal fade fixed-left" 
+    tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-aside modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary">Mark student as complete!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning" role="alert">
+                    <p><strong>Use this form to mark a student as completed course or classes. 
+                        </strong>
+                    </p>
+                    <hr />
+                    <p class="mb-0">Student marked as complete has completed all the 
+                                exams and and results have been published. </p>
+                </div>
+
+                <hr class="my-2" />
+
+                <form id="add_student_to_academic_year_class" autocomplete="off">
+                    <input type="hidden" name="year_id_input" id="year_id_input" />
+
+                    <div class="form-group">
+                        <label for="student_id_for_input" class="text-primary">Choose a student*: </label>
+                        <select name="student_id_for_input" id="student_id_for_input" class="form-control"></select>
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <div class="btn-group">
+                        <button class="btn btn-md btn-primary" type="submit">
+                            Comfirm Complete.
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -29,7 +29,7 @@
                     <a class="dropdown-item d-flex align-items-center" href="#">
                         
                         <div class="font-weight-bold">
-                            <div>Hi there! <?php echo htmlentities($_SESSION['alogin']); ?>. Welcome to 
+                            <div>Hi there! <?php # echo htmlentities($_SESSION['alogin']); ?>. Welcome to 
                         Al Madrasatul Munawwarah Al Islamiyyah </div>
                             <div class="small text-gray-500">Salim Juma · 58m</div>
                         </div>
@@ -45,7 +45,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-900 small">
-                    <?php echo htmlentities($_SESSION['alogin']); ?>
+                    <?php # echo htmlentities($_SESSION['alogin']); ?>
                 </span>
                 <img class="img-profile rounded-circle" src="/src/img/download.png">
             </a>

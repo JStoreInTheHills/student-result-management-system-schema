@@ -157,11 +157,17 @@ function customJs() {
   //   .src("./src/js/school.js")
   //   .pipe(gulp.dest("./dist/js/utils"));
 
-  var terms = gulp.src("./src/js/terms/*").pipe(gulp.dest("./dist/js/terms"));
+  var terms = gulp
+    .src("./pages/terms/src/js/*")
+    .pipe(gulp.dest("./dist/js/terms"));
 
-  var classes = gulp.src("./src/js/class/*").pipe(gulp.dest("./dist/js/classes"));
+  var classes = gulp
+    .src("./pages/classes/src/js/*")
+    .pipe(gulp.dest("./dist/js/classes"));
 
-  // var exam = gulp.src("./src/js/exam/*").pipe(gulp.dest("./dist/js/exams"));
+  var exam = gulp
+    .src("./pages/exams/src/js/*")
+    .pipe(gulp.dest("./dist/js/exams"));
 
   var webfonts = gulp
     .src("./vendor/fontawesome-free/webfonts/*")
@@ -170,24 +176,29 @@ function customJs() {
   // var result = gulp
   //   .src("./src/js/result/*")
   //   .pipe(gulp.dest("./dist/js/results"));
+
   var stream = gulp
-    .src("./src/js/stream/*")
+    .src("./pages/streams/src/js/*")
     .pipe(gulp.dest("./dist/js/streams"));
-  // var student = gulp
-  //   .src("./src/js/students/*")
-  //   .pipe(gulp.dest("./dist/js/students"));
-  var year = gulp.src("./src/js/year/*").pipe(gulp.dest("./dist/js/years"));
+
+  var student = gulp
+    .src("./pages/student/src/js/*")
+    .pipe(gulp.dest("./dist/js/students"));
+
+  var year = gulp
+    .src("./pages/academic_year/src/js/*")
+    .pipe(gulp.dest("./dist/js/years"));
 
   // var subjects = gulp
   //   .src("./src/js/subjects/*")
   //   .pipe(gulp.dest("./dist/js/subjects"));
 
   var teacher = gulp
-    .src("./src/js/teachers/*")
+    .src("./pages/teachers/src/js/*")
     .pipe(gulp.dest("./dist/js/teachers"));
 
   var admin = gulp
-    .src("./src/js/user/*")
+    .src("./pages/users/src/js/*")
     .pipe(gulp.dest("./dist/js/user"));
 
   // var settings = gulp
@@ -201,9 +212,9 @@ function customJs() {
   return merge(
     // result,
     classes,
-    // exam,
+    exam,
     stream,
-    // student,
+    student,
     // subjects,
     year,
     teacher,
@@ -311,6 +322,7 @@ function css() {
 // Watch files
 function watchFiles() {
   gulp.watch(["./src/js/**/*"], customJs);
+  gulp.watch(["./pages/**/src/js/*"], customJs);
   gulp.watch(["./src/css/*"], css);
 }
 

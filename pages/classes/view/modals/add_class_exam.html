@@ -1,0 +1,51 @@
+ <!-- Exam Add Modal-->
+ <div class="modal fade" id="add_class_exam" data-backdrop="static" tabindex="-1" role="dialog"
+     aria-labelledby="exam_modal" aria-hidden="true">
+     <div class="modal-dialog modal-dialog" role="document">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title text-primary" id="exam_modal">
+                     <span><i class="fas fa-edit"></i></span> Add Exam To Class</h5>
+                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                 </button>
+             </div>
+
+             <div class="modal-body">
+
+                 <form id="view_class_form" class="user">
+
+                     <input type="hidden" id="class_id_for_add_exam_modal" name="class_id_for_add_exam_modal">
+                     <div class="form-group row">
+                         <div class="col-sm-12 mb-3 mb-sm-0">
+                             <label class="text-primary" for="year_id">Choose academic year:</label>
+                             <select style="width:100%" name="year_id" id="year_id" class="form-control">
+                             </select>
+                         </div>
+                     </div>
+
+                     <div class="form-group row">
+                         <div class="col-sm-12 mb-3 mb-sm-0">
+                             <label class="text-primary" for="term_id">Add Appropriate Term:</label>
+                             <select name="term_id" id="term_id" class="form-control ">
+                             </select>
+                         </div>
+                     </div>
+
+                     <div class="form-group row">
+                         <div class="col-sm-12 mb-3 mb-sm-0">
+                             <label class="text-primary" for="exam_id">Choose an Exam:</label>
+                             <select name="exam_id" id="exam_id" style="width:100%" class="form-control "></select>
+                         </div>
+                     </div>
+
+                     <div class="btn-group modal-footer">
+                         <button class="btn btn-primary" type="submit">
+                             Add
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>

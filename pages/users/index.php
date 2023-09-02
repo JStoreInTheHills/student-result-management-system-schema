@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <?php include "../../resources/views/css_files.html";?>
+<?php include "../../resources/views/css_files.html";?>
 
 <body id="page-top">
 
@@ -42,7 +42,7 @@
                         </h1>
                         <div class="btn-group">
 
-                            <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#add_class_teacher">
+                            <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#add_new_user">
                                 <span><i class="fas fa-users"></i> </span> Add New User
                             </button>
 
@@ -92,8 +92,10 @@
 
                         <div class="col-lg-12">
                             <div id="main_content" class="card shadow mb-4">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="mx font-weight-bold text-primary"> <span><i class="fas fa-users"></i></span>
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="mx font-weight-bold text-primary"> <span><i
+                                                class="fas fa-users"></i></span>
                                         All User</h6>
                                 </div>
                                 <div class="card-body">
@@ -124,7 +126,7 @@
             </div>
             <!-- End of Main Content -->
 
-           <?php include '../../resources/views/footer.html' ?>
+            <?php include '../../resources/views/footer.html' ?>
         </div>
         <!-- End of Content Wrapper -->
 
@@ -133,7 +135,7 @@
 
     <?php include '../../resources/views/logout_modal.html' ?>
 
-    <div class="modal fade" id="add_class_teacher" data-backdrop="static" tabindex="-1" role="dialog"
+    <div class="modal fade" id="add_new_user" data-backdrop="static" tabindex="-1" role="dialog"
         aria-labelledby="class_teacher_modal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -146,19 +148,15 @@
                 </div>
 
                 <div class="modal-body">
-                    <form id="teachers_form">
 
-                        <div class="alert alert-info alert-dismissible fade show" role="alert">
-                            <strong>Before you add a teacher, first add a user in the Users module.</strong>
-                            <hr>
-                            Click here <a href="/admin/pages/new_user" class="alert-link">Users</a> 
-                                to add a new user before you continue.
-
-                        </div>
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <strong>Use this modal to add a new user to the system. </strong>
                         <hr>
+                       When adding new users, they can use their own email addresses, not specifically the once assigned by the school.  Click on save to save the details of the user. 
+                    </div>
+                    <hr>
 
-                        <span><i class="fas fa-user mr-2"></i></span>
-                        <label for="teachers_name" class="text-primary">Personal Information </label>
+                    <form id="users_form" class=user>
 
                         <div class="form-group">
                             <label class="text-primary" for="user_name">User Name: </label>
@@ -171,25 +169,23 @@
                             <input type="email" name="email_address" id="email_address" class="form-control"
                                 placeholder="Enter email address" required>
                         </div>
-                       
-                            <div class="form-group">
-                                <label class="text-primary" for="password">Password: </label>
-                                <input type="password" name="password" id="password"
-                                    class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                               <label class="text-primary" for="password">Re Enter Password: </label>
-                                <input type="password" name="re-password" id="re-password"
-                                    class="form-control" required>
-                            </div>
+
+                        <div class="form-group">
+                            <label class="text-primary" for="password">Password: </label>
+                            <input type="password" name="password" id="password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-primary" for="re_password">Re Enter Password: </label>
+                            <input type="password" name="re_password" id="re_password" class="form-control" required>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">
+                            Save
+                        </button>
 
                     </form>
-                </div>
 
-                <div class="modal-footer btn-group">
-                    <button class="btn btn-primary" type="submit" id="add_teacher_submit">
-                        Save
-                    </button>
+
                 </div>
             </div>
         </div>
@@ -199,7 +195,7 @@
     <script src="/dist/js/main.min.js"></script>
     <script src="/dist/js/utils/utils.js"></script>
     <script src="/dist/js/user/user.js"></script>
-    
+
 </body>
 
 </html>

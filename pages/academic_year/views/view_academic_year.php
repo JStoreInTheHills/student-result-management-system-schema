@@ -191,7 +191,7 @@
                         <div class="tab-pane fade show active" id="nav-academic-year-performance" role="tabpanel"
                             aria-labelledby="nav-academic-year-performance-tab">
 
-                            <div class="alert alert-secondary alert-dismissible show" role="alert">
+                            <div class="alert alert-warning alert-dismissible show" role="alert">
                                 <strong>All the Classes for this year, are shown on the table below. The fields
                                     include the class, the class teacher, the class stream and the day the class was
                                     posted to academic year.</strong>
@@ -251,11 +251,14 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <?php # include '../../resources/views/logout_modal.html' ?>
+    <!--------------------------------- MODALS ----------------------------------------->
+    <!-- Log Out Modal -->
+    <?php include '../../resources/views/logout_modal.html' ?>
 
-
+    <!-- Add Class Modal -->
     <?php include "./_partials/add_class_to_academic_year_modal.html" ?>
 
+    <!----------------------------------END OF MODALS ---------------------------------->
 
     <script src="/dist/js/main.min.js"></script>
     <script src="/dist/js/utils/utils.js"></script>

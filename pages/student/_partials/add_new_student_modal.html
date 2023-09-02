@@ -1,0 +1,65 @@
+<div id="add_student_modal" class="modal fade fixed-left" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-aside modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-sm-flex align-items-center justify-content-between">
+                <h5 class="modal-title text-primary font-weight-bold" id="add_student_modal_title">
+                    Add New Student </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning alert-dismissible fade show" role="aler">
+                    <strong>Use this form to add a new student. All field with * are required</strong>
+                    <hr>
+                    Click on submit to save your changes.
+                </div>
+                <hr>
+
+                <form id="add_student_form">
+                    <div class="row">
+                        <!-- First Name Input Field -->
+                        <div class="form-group col-md-6 col-lg-6 col-xs-6">
+                            <label for="first_name" class="text-primary">First Name*</label>
+                            <input placeholder="Enter first name" type="text" name="first_name" id="first_name"
+                                class="form-control">
+                        </div>
+                        <!-- Middle Name Input Field -->
+                        <div class="form-group col-md-6 col-lg-6 col-xs-6">
+                            <label for="middle_name" class="text-primary">Middle Name*</label>
+                            <input placeholder="Enter middle name" type="text" name="middle_name" id="middle_name"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <!-- Last Name Input Field -->
+                    <div class="form-group">
+                        <label for="last_name" class="text-primary">Last Name*</label>
+                        <input placeholder="Enter last name" type="text" name="last_name" id="last_name"
+                            class="form-control">
+
+                    </div>
+                    <div class=" row">
+                        <!-- Roll Id input field -->
+                        <div class="form-group col-md-6 col-lg-6 col-xs-6">
+                            <label for="roll_id" class="text-primary">Admission Number*</label>
+                            <input placeholder="Enter Admission Number" type="text" name="roll_id" id="roll_id"
+                                class="form-control">
+                        </div>
+                        <!-- Gender Input Field -->
+                        <div class="form-group col-md-6 col-lg-6 col-xs-6">
+                            <label for="gender" class="text-primary">Gender</label>
+                            <select name="gender" id="gender" class="form-control">
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary btn-md">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
